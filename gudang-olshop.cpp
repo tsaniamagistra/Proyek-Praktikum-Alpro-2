@@ -34,3 +34,24 @@ char menu()
 	getline(cin, sel);
 	return sel[0];
 }
+
+void add_produk()
+{
+	system("cls");
+
+	cout << "[==============================================================]\n";
+	cout << "|                      Gudang Online Shop                      |\n";
+	cout << "[==============================================================]\n\n";
+	cout << " Tambahkan Produk\n\n";
+	cout << " Nama Produk : ";
+	getline(cin, gd[hitung].nama);
+	cout << " Merk Produk : ";
+	getline(cin, gd[hitung].merk);
+	cout << " Stok Produk : ";
+	getline(cin, gd[hitung].stok);
+	cout << " Harga Produk (ecer) : ";
+	cin >> gd[hitung].harga;
+
+	++hitung;
+}
+//123
