@@ -6,7 +6,7 @@
 
 using namespace std;
 
-char menu(); void tambah(); void tampil(); void ubah(); void hapus();
+int menu(); void tambah(); void tampil(); void ubah(); void hapus();
 
 struct gudangolshop
 {
@@ -23,7 +23,7 @@ int hitung = 0;
 int main(){
     while (true)
     {
-        char select = menu();
+        int select = menu();
         if (select == '1')
             tambah();
         else if (select == '2')
@@ -36,7 +36,7 @@ int main(){
 	return 0;
 }
 
-char menu()
+int menu()
 {
 	system("cls");
     string sel;
