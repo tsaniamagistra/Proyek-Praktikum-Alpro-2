@@ -6,7 +6,7 @@
 
 using namespace std;
 
-char menu(); void tambah(); void tampil(); void cari(); void edit(); void hapus();
+char menu(); void tambah(); void tampil(); void ubah(); void hapus();
 
 struct gudangolshop
 {
@@ -29,7 +29,9 @@ int main(){
         else if (select == '2')
             tampil();
         else if (select == '3')
-            cari();
+            ubah();
+		else if (select == '4')
+			break;
 	}
 	return 0;
 }
@@ -58,6 +60,7 @@ void tambah()
 
 	cout << "[==============================================================]\n";
 	cout << "|                      Gudang Online Shop                      |\n";
+	cout << "|                        Tambah Produk					        |\n";
 	cout << "[==============================================================]\n\n";
 	cout << " Tambahkan Produk\n\n";
 	cout << " Nama Produk : ";
