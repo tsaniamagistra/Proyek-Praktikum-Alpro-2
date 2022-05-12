@@ -6,7 +6,7 @@
 
 using namespace std;
 
-char menu(); void tambah(); void tampil(); void ubah(); void hapus();
+int menu(); void tambah(); void tampil(); void ubah(); void hapus();
 
 struct gudangolshop
 {
@@ -23,23 +23,23 @@ int hitung = 0;
 int main(){
     while (true)
     {
-        char select = menu();
-        if (select == '1')
+        int select = menu();
+        if (select == 1)
             tambah();
-        else if (select == '2')
+        else if (select == 2)
             tampil();
-        else if (select == '3')
+        else if (select == 3)
             ubah();
-		else if (select == '4')
+		else if (select == 4)
 			break;
 	}
 	return 0;
 }
 
-char menu()
+int menu()
 {
 	system("cls");
-    string sel;
+    int sel;
 	cout << "[==============================================================]\n";
 	cout << "|                      Gudang Online Shop                      |\n";
 	cout << "[==============================================================]\n\n";
@@ -50,8 +50,8 @@ char menu()
 	cout << " [4] Keluar\n\n";
 	cout << " Pilih	: ";
 
-	getline(cin, sel);
-	return sel[0];
+	cin>>sel;
+	return sel;
 }
 
 void tambah()
@@ -60,11 +60,11 @@ void tambah()
 
 	cout << "[==============================================================]\n";
 	cout << "|                      Gudang Online Shop                      |\n";
-	cout << "|                        Tambah Produk					        |\n";
+	cout << "|                        Tambah Produk                         |\n";
 	cout << "[==============================================================]\n\n";
 	cout << " Tambahkan Produk\n\n";
 	cout << " Nama Produk : ";
-	getline(cin, gd[hitung].nama);
+	cin.ignore(); getline(cin, gd[hitung].nama);
 	cout << " Merk Produk : ";
 	getline(cin, gd[hitung].merk);
 	cout << " Stok Produk : ";
