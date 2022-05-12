@@ -6,9 +6,9 @@
 
 using namespace std;
 
-int menu(); void tambah(); void tampil(); void ubah(); void hapus(); void pesanan();
+int menu(); void tambah(); void tampil(); void ubah(); void hapus();
 
-struct databarang
+struct gudangolshop
 {
 	string nama;
 	string merk;
@@ -16,7 +16,7 @@ struct databarang
 	int harga;
 };
 
-databarang barang[100];
+gudangolshop gd[100];
 
 int hitung = 0;
 
@@ -30,9 +30,7 @@ int main(){
             tampil();
         else if (select == 3)
             ubah();
-        else if (select == 4)
-			pesanan();
-		else if (select == 5)
+		else if (select == 4)
 			break;
 	}
 	return 0;
@@ -49,8 +47,7 @@ int menu()
 	cout << " [1] Tambahkan Produk\n";
 	cout << " [2] Tampilkan Produk\n";
 	cout << " [3] Ubah Produk\n";
-	cout << " [4] Daftar Pesanan\n";
-	cout << " [5] Keluar\n\n";
+	cout << " [4] Keluar\n\n";
 	cout << " Pilih	: ";
 
 	cin>>sel;
@@ -67,13 +64,13 @@ void tambah()
 	cout << "[==============================================================]\n\n";
 	cout << " Tambahkan Produk\n\n";
 	cout << " Nama Produk : ";
-	cin.ignore(); getline(cin, barang[hitung].nama);
+	cin.ignore(); getline(cin, gd[hitung].nama);
 	cout << " Merk Produk : ";
-	getline(cin, barang[hitung].merk);
+	getline(cin, gd[hitung].merk);
 	cout << " Stok Produk : ";
-	getline(cin, barang[hitung].stok);
+	getline(cin, gd[hitung].stok);
 	cout << " Harga Produk : ";
-	cin >> barang[hitung].harga;
+	cin >> gd[hitung].harga;
 
 	++hitung;
 }
@@ -96,10 +93,10 @@ void tampil()
 
     for(int i = 0; i < hitung; i++){
         cout << "|" << setw(4) << i+1;
-        cout << setw(15) << barang[i].nama;
-        cout << setw(15) << barang[i].merk;
-        cout << setw(15) << barang[i].stok;
-        cout << setw(7) << "Rp. " << barang[1].harga;
+        cout << setw(15) << gd[i].nama;
+        cout << setw(15) << gd[i].merk;
+        cout << setw(15) << gd[i].stok;
+        cout << setw(7) << "Rp. " << gd[1].harga;
         cout << setw(7) << "| "<< endl;
 		cout << "[==============================================================]\n";
         }
@@ -123,13 +120,13 @@ void ubah()
 	if (b < hitung)
 	{
 		cout << "\n Nama Produk : ";
-		getline(cin, barang[b].nama);
+		getline(cin, gd[b].nama);
 		cout << " Merk Produk : ";
-		getline(cin, barang[b].merk);
+		getline(cin, gd[b].merk);
 		cout << " Stok Produk : ";
-		getline(cin, barang[b].stok);
+		getline(cin, gd[b].stok);
 		cout << " Harga Produk (ecer) : ";
-		cin >> barang[b].harga;
+		cin >> gd[b].harga;
 	}
 
 	else
@@ -139,12 +136,3 @@ void ubah()
 	}
 }
 
-void pesanan()
-{
-	system("cls");
-    cout << "[==============================================================]\n";
-    cout << "|                      Gudang Online Shop                      |\n";
-    cout << "|                           Pesanan                            |\n";
-    cout << "[==============================================================]\n\n";
-	
-}
