@@ -1,47 +1,58 @@
 //Gudang Online Shop
-#include<iostream>
-#include<fstream>
-#include<string>
-#include<iomanip>
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <iomanip>
 
 using namespace std;
 
-int menu(); void tambah(); void tampil(); void ubah(); void hapus();
+int menuPrd(); void tambahPrd(); void tampilPrd(); void ubahPrd(); void hapusPrd();
 
-struct gudangolshop
+struct dataProduk
 {
 	string nama;
 	string merk;
 	string stok;
 	int harga;
 };
+dataProduk produk[100];
 
-gudangolshop gd[100];
+struct dataPesanan
+{
+	string kodePesan;
+	int tglPesan;
+	string pemesan;
+	string namaBarang;
+	enum status { dikemas, terkemas, dikirim, diterima } check;
+	int tglKirim;
+	int tglTerima;
+};
+dataPesanan pesanan[1];
 
 int hitung = 0;
 
 int main(){
     while (true)
     {
-        int select = menu();
-        if (select == '1')
-            tambah();
-        else if (select == '2')
-            tampil();
-        else if (select == '3')
-            ubah();
-		else if (select == '4')
+        int select = menuPrd();
+		if (select == 1)
+            tambahPrd();
+        else if (select == 2)
+            tampilPrd();
+        else if (select == 3)
+            ubahPrd();
+		else if (select == 4)
 			break;
 	}
-	return 0;
 }
+int menuPrd()
 
-int menu()
 {
 	system("cls");
-    string sel;
+    int sel;
 	cout << "[==============================================================]\n";
 	cout << "|                      Gudang Online Shop                      |\n";
+	cout << "|                            Produk                            |\n";
 	cout << "[==============================================================]\n\n";
 	cout << " Menu Utama\n\n";
 	cout << " [1] Tambahkan Produk\n";
@@ -50,32 +61,31 @@ int menu()
 	cout << " [4] Keluar\n\n";
 	cout << " Pilih	: ";
 
-	getline(cin, sel);
-	return sel[0];
+	cin>>sel;
+	return sel;
 }
 
-void tambah()
+void tambahPrd()
 {
 	system("cls");
-
 	cout << "[==============================================================]\n";
 	cout << "|                      Gudang Online Shop                      |\n";
-	cout << "|                        Tambah Produk					        |\n";
+	cout << "|                        Tambah Produk                         |\n";
 	cout << "[==============================================================]\n\n";
 	cout << " Tambahkan Produk\n\n";
 	cout << " Nama Produk : ";
-	getline(cin, gd[hitung].nama);
+	cin.ignore(); getline(cin, produk[hitung].nama);
 	cout << " Merk Produk : ";
-	getline(cin, gd[hitung].merk);
+	getline(cin, produk[hitung].merk);
 	cout << " Stok Produk : ";
-	getline(cin, gd[hitung].stok);
+	getline(cin, produk[hitung].stok);
 	cout << " Harga Produk : ";
-	cin >> gd[hitung].harga;
+	cin >> produk[hitung].harga;
 
 	++hitung;
 }
 
-void tampil()
+void tampilPrd()
 {
     system("cls");
     cout << "[==============================================================]\n";
@@ -93,17 +103,17 @@ void tampil()
 
     for(int i = 0; i < hitung; i++){
         cout << "|" << setw(4) << i+1;
-        cout << setw(15) << gd[i].nama;
-        cout << setw(15) << gd[i].merk;
-        cout << setw(15) << gd[i].stok;
-        cout << setw(7) << "Rp. " << gd[1].harga;
+        cout << setw(15) << produk[i].nama;
+        cout << setw(15) << produk[i].merk;
+        cout << setw(15) << produk[i].stok;
+        cout << setw(7) << "Rp. " << produk[1].harga;
         cout << setw(7) << "| "<< endl;
 		cout << "[==============================================================]\n";
         }
     system("pause");
 }
 
-void ubah()
+void ubahPrd()
 {
     int a,b;
     system("cls");
@@ -120,13 +130,13 @@ void ubah()
 	if (b < hitung)
 	{
 		cout << "\n Nama Produk : ";
-		getline(cin, gd[b].nama);
+		getline(cin, produk[b].nama);
 		cout << " Merk Produk : ";
-		getline(cin, gd[b].merk);
+		getline(cin, produk[b].merk);
 		cout << " Stok Produk : ";
-		getline(cin, gd[b].stok);
-		cout << " Harga Produk (ecer) : ";
-		cin >> gd[b].harga;
+		getline(cin, produk[b].stok);
+		cout << " Harga Produk : ";
+		cin >> produk[b].harga;
 	}
 
 	else
@@ -136,3 +146,26 @@ void ubah()
 	}
 }
 
+int menuPesanan()
+{
+	system("cls");
+	int sel;
+    cout << "[==============================================================]\n";
+    cout << "|                      Gudang Online Shop                      |\n";
+    cout << "|                           Pesanan                            |\n";
+    cout << "[==============================================================]\n\n";
+	
+	cout << " Menu Utama\n\n";
+	cout << " [1] Tambahkan Pesanan\n";
+	cout << " [2] Tampilkan Pesanan\n";
+	cout << " [3] Ubah Pesanan\n";
+	cout << " [4] Keluar\n\n";
+	cout << " Pilih	: ";
+
+	cin>>sel;
+	return sel;
+}
+void hapusPrd(){};
+void tambahPsn();
+void tampilPsn(){};
+void ubahPsn(){};
