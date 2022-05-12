@@ -28,6 +28,8 @@ int main(){
             tambah();
         else if (select == '2')
             tampil();
+        else if (select == '3')
+            cari();
 	}
 	return 0;
 }
@@ -97,5 +99,37 @@ void tampil()
         }
     system("pause");
 }
-//1
-///2
+
+void ubah()
+{
+    int a,b;
+    system("cls");
+    cout << "[==============================================================]\n";
+    cout << "|                      Gudang Online Shop                      |\n";
+    cout << "|                         Ubah Produk                          |\n";
+    cout << "[==============================================================]\n\n";
+    cout << " Urutan produk yang ingin diedit	: ";
+	cin >> a;
+	cin.ignore(1, '\n');
+
+	b = a - 1;
+
+	if (b < hitung)
+	{
+		cout << "\n Nama Produk : ";
+		getline(cin, gd[b].nama);
+		cout << " Merk Produk : ";
+		getline(cin, gd[b].merk);
+		cout << " Stok Produk : ";
+		getline(cin, gd[b].stok);
+		cout << " Harga Produk (ecer) : ";
+		cin >> gd[b].harga;
+	}
+
+	else
+	{
+		cout << "\n Produk tidak ditemukan" << endl;
+		system("pause");
+	}
+}
+
