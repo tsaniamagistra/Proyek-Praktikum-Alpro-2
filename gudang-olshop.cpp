@@ -2,17 +2,32 @@
 #include<iostream>
 #include<fstream>
 #include<string>
+#include<iomanip>
 
 using namespace std;
 
-char menu();
+char menu(); void tambah(); void tampil(); void cari(); void edit(); void hapus();
 
-int main()
+struct gudangolshop
 {
-	while (true)
-	{
-		char select = menu();
+	string nama;
+	string merk;
+	string stok;
+	int harga;
+};
 
+gudangolshop gd[100];
+
+int hitung = 0;
+
+int main(){
+    while (true)
+    {
+        char select = menu();
+        if (select == '1')
+            tambah();
+        else if (select == '2')
+            tampil();
 	}
 	return 0;
 }
@@ -20,7 +35,7 @@ int main()
 char menu()
 {
 	system("cls");
-
+    string sel;
 	cout << "[==============================================================]\n";
 	cout << "|                      Gudang Online Shop                      |\n";
 	cout << "[==============================================================]\n\n";
@@ -30,12 +45,12 @@ char menu()
 	cout << " [3] Ubah Produk\n";
 	cout << " [4] Keluar\n\n";
 	cout << " Pilih	: ";
-	string sel;
+
 	getline(cin, sel);
 	return sel[0];
 }
 
-void add_produk()
+void tambah()
 {
 	system("cls");
 
@@ -49,9 +64,36 @@ void add_produk()
 	getline(cin, gd[hitung].merk);
 	cout << " Stok Produk : ";
 	getline(cin, gd[hitung].stok);
-	cout << " Harga Produk (ecer) : ";
+	cout << " Harga Produk : ";
 	cin >> gd[hitung].harga;
 
 	++hitung;
 }
-//123
+
+void tampil()
+{
+    system("cls");
+    cout << "[==============================================================]\n";
+    cout << "|                      Gudang Online Shop                      |\n";
+    cout << "|                         Isi Produk                           |\n";
+    cout << "[==============================================================]\n\n";
+    cout << "[==============================================================]\n";
+	cout << setw(5) << "| No.";
+	cout << setw(15) << "Nama Produk";
+	cout << setw(15) << "Merk Produk";
+	cout << setw(15) << "Stok Produk";
+	cout << setw(11) << "Harga" <<"  | ";
+	cout << endl;
+    cout << "[==============================================================]\n";
+
+    for(int i = 0; i < hitung; i++){
+        cout << "|" << setw(4) << i+1;
+        cout << setw(15) << gd[i].nama;
+        cout << setw(15) << gd[i].merk;
+        cout << setw(15) << gd[i].stok;
+        cout << setw(7) << "Rp. " << gd[1].harga;
+        cout << setw(7) << "| "<< endl;
+		cout << "[==============================================================]\n";
+        }
+    system("pause");
+}
