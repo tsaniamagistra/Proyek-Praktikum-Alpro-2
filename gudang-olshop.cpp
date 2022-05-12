@@ -98,3 +98,4 @@ void tampil()
     system("pause");
 }
 //1
+///2
