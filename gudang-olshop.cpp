@@ -2,6 +2,7 @@
 #include<iostream>
 #include<fstream>
 #include<string>
+<<<<<<< HEAD
 #include<iomanip>
 
 using namespace std;
@@ -28,6 +29,19 @@ int main(){
             tambah();
         else if (select == '2')
             tampil();
+=======
+
+using namespace std;
+
+char menu();
+
+int main()
+{
+	while (true)
+	{
+		char select = menu();
+
+>>>>>>> fde23cca71b8ef2c1f8036b9b7632f8bb7638b02
 	}
 	return 0;
 }
@@ -35,7 +49,11 @@ int main(){
 char menu()
 {
 	system("cls");
+<<<<<<< HEAD
     string sel;
+=======
+
+>>>>>>> fde23cca71b8ef2c1f8036b9b7632f8bb7638b02
 	cout << "[==============================================================]\n";
 	cout << "|                      Gudang Online Shop                      |\n";
 	cout << "[==============================================================]\n\n";
@@ -45,6 +63,7 @@ char menu()
 	cout << " [3] Ubah Produk\n";
 	cout << " [4] Keluar\n\n";
 	cout << " Pilih	: ";
+<<<<<<< HEAD
 
 	getline(cin, sel);
 	return sel[0];
@@ -97,3 +116,9 @@ void tampil()
         }
     system("pause");
 }
+=======
+	string sel;
+	getline(cin, sel);
+	return sel[0];
+}
+>>>>>>> fde23cca71b8ef2c1f8036b9b7632f8bb7638b02
