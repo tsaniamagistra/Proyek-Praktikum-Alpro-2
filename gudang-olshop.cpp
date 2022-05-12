@@ -17,8 +17,19 @@ struct dataProduk
 	string stok;
 	int harga;
 };
-
 dataProduk produk[100];
+
+struct dataPesanan
+{
+	string kodePesan;
+	int tglPesan;
+	string pemesan;
+	string namaBarang;
+	enum status { dikemas, terkemas, dikirim, diterima } check;
+	int tglKirim;
+	int tglTerima;
+};
+dataPesanan pesanan[1];
 
 int hitung = 0;
 
@@ -29,31 +40,22 @@ int main(){
         if (select == 1){
             while (true){
 				int q = menuProduk();
-				if (q == 1)
-					tambahPrd();
-				else if (q == 2)
-					tampilPrd();
-				else if (q == 3)
-					ubahPrd();
-				else if (q == 4)
-					break;
+				if (q == 1) tambahPrd();
+				else if (q == 2) tampilPrd();
+				else if (q == 3) ubahPrd();
+				else if (q == 4) break;
 			}
 		}
         else if (select == 2){
 			while (true){
 				int q = menuPesanan();
-				if (q == 1)
-					tambahPsn();
-				else if (q == 2)
-					tampilPsn();
-				else if (q == 3)
-					ubahPsn();
-				else if (q == 4)
-					break;
+				if (q == 1) tambahPsn();
+				else if (q == 2) tampilPsn();
+				else if (q == 3) ubahPsn();
+				else if (q == 4) break;
 			}
 		}
-        else if (select == 3)
-			break;
+        else if (select == 3) break;
 	}
 	return 0;
 }
