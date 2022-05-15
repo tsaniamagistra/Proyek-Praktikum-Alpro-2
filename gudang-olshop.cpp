@@ -198,23 +198,25 @@ int menuPesanan()
 }
 
 void tambahPsn(){
-	FILE *outfile;
-	dataPesanan pesanan;
+	string datastring; int dataint;
 	
-	outfile = fopen("dbPesanan.txt","a");
-	
-	cout<<"Kode Pesanan : ";
-	cin.ignore(); getline(cin, pesanan.kodePesanan);
-	cout<<"Tanggal Pesan (YYYYMMDD) : ";
-	cin>>pesanan.tglPesan;
-	cout<<"Nama Pemesan : ";
-	cin.ignore(); getline(cin, pesanan.pemesan);
-	cout<<"Nama Produk : ";
-	getline(cin, pesanan.namaProduk);
-	fflush(stdin);
-	fwrite(&pesanan, sizeof(pesanan), 1, outfile);
-	
-	fclose(outfile);
+	ofstream fout("dbPesanan.txt", ios::app);
+	if (!fout.fail()){
+		cout<<"Kode Pesanan : "; 
+		cin.ignore(); getline(cin, datastring);
+		fout << datastring << endl;
+		cout<<"Tanggal Pesan (YYYYMMDD) : ";
+		cin >> dataint;
+		fout << dataint << endl;
+		cout<<"Nama Pemesan : ";
+		cin.ignore(); getline(cin, datastring);
+		fout << datastring << endl;
+		cout<<"Nama Produk : ";
+		getline(cin, datastring);
+		fout << datastring << endl;
+	}
+		
+	fout.close();
 }
 void tampilPsn(){
 	dataPesanan pesanan;
@@ -224,6 +226,8 @@ void tampilPsn(){
 	if (!fin.fail()){
 		getline(fin, pesanan.kodePesanan);
 		cout<<pesanan.tglPesan;
+		getline(fin, pesanan.pemesan);
+		getline(fin, pesanan.namaProduk);
 	}
 	
 	fin.close();
