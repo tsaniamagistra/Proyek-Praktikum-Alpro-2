@@ -3,10 +3,13 @@
 #include <fstream>
 #include <string>
 #include <iomanip>
+#include <stdlib.h>
 
 using namespace std;
 
-int menuPrd(); void tambahPrd(); void tampilPrd(); void ubahPrd(); void hapusPrd();
+int menu(); int menuProduk(),menuPesanan();
+void tambahPrd(),tampilPrd(),ubahPrd(),hapusPrd();
+void tambahPsn(),tampilPsn(),ubahPsn();
 
 struct dataProduk
 {
@@ -19,34 +22,60 @@ dataProduk produk[100];
 
 struct dataPesanan
 {
-	string kodePesan;
+	string kodePesanan;
 	int tglPesan;
 	string pemesan;
-	string namaBarang;
+	string namaProduk;
 	enum status { dikemas, terkemas, dikirim, diterima } check;
-	int tglKirim;
-	int tglTerima;
 };
-dataPesanan pesanan[1];
 
 int hitung = 0;
 
 int main(){
     while (true)
     {
-        int select = menuPrd();
-		if (select == 1)
-            tambahPrd();
-        else if (select == 2)
-            tampilPrd();
-        else if (select == 3)
-            ubahPrd();
-		else if (select == 4)
-			break;
+        int select = menu();
+        if (select == 1){
+            while (true){
+				int q = menuProduk();
+				if (q == 1) tambahPrd();
+				else if (q == 2) tampilPrd();
+				else if (q == 3) ubahPrd();
+				else if (q == 4) break;
+			}
+		}
+        else if (select == 2){
+			while (true){
+				int q = menuPesanan();
+				if (q == 1) tambahPsn();
+				else if (q == 2) tampilPsn();
+				else if (q == 3) ubahPsn();
+				else if (q == 4) break;
+			}
+		}
+        else if (select == 3) break;
 	}
+	return 0;
 }
-int menuPrd()
 
+int menu()
+{
+	system("cls");
+    int sel;
+	cout << "[==============================================================]\n";
+	cout << "|                      Gudang Online Shop                      |\n";
+	cout << "[==============================================================]\n\n";
+	cout << " Menu Utama\n\n";
+	cout << " [1] Data Produk\n";
+	cout << " [2] Data Pesanan\n";
+	cout << " [3] Keluar\n\n";
+	cout << " Pilih	: ";
+
+	cin>>sel;
+	return sel;
+}
+
+int menuProduk()
 {
 	system("cls");
     int sel;
@@ -146,6 +175,8 @@ void ubahPrd()
 	}
 }
 
+void hapusPrd(){}
+
 int menuPesanan()
 {
 	system("cls");
@@ -165,7 +196,36 @@ int menuPesanan()
 	cin>>sel;
 	return sel;
 }
-void hapusPrd(){};
-void tambahPsn();
-void tampilPsn(){};
-void ubahPsn(){};
+
+void tambahPsn(){
+	FILE *outfile;
+	dataPesanan pesanan;
+	
+	outfile = fopen("dbPesanan.txt","a");
+	
+	cout<<"Kode Pesanan : ";
+	cin.ignore(); getline(cin, pesanan.kodePesanan);
+	cout<<"Tanggal Pesan (YYYYMMDD) : ";
+	cin>>pesanan.tglPesan;
+	cout<<"Nama Pemesan : ";
+	cin.ignore(); getline(cin, pesanan.pemesan);
+	cout<<"Nama Produk : ";
+	getline(cin, pesanan.namaProduk);
+	fflush(stdin);
+	fwrite(&pesanan, sizeof(pesanan), 1, outfile);
+	
+	fclose(outfile);
+}
+void tampilPsn(){
+	dataPesanan pesanan;
+	ifstream fin;
+	
+	fin.open("dbPesanan.txt");
+	if (!fin.fail()){
+		getline(fin, pesanan.kodePesanan);
+		cout<<pesanan.tglPesan;
+	}
+	
+	fin.close();
+}
+void ubahPsn(){}
