@@ -20,15 +20,6 @@ struct dataProduk
 };
 dataProduk produk[100];
 
-struct dataPesanan
-{
-	string kodePesanan;
-	int tglPesan;
-	string pemesan;
-	string namaProduk;
-	enum status { dikemas, terkemas, dikirim, diterima } check;
-};
-
 int hitung = 0;
 
 int main(){
@@ -197,38 +188,39 @@ int menuPesanan()
 	return sel;
 }
 
-void tambahPsn(){
-	string datastring; int dataint;
-	
-	ofstream fout("dbPesanan.txt", ios::app);
-	if (!fout.fail()){
-		cout<<"Kode Pesanan : "; 
-		cin.ignore(); getline(cin, datastring);
-		fout << datastring << endl;
-		cout<<"Tanggal Pesan (YYYYMMDD) : ";
-		cin >> dataint;
-		fout << dataint << endl;
-		cout<<"Nama Pemesan : ";
-		cin.ignore(); getline(cin, datastring);
-		fout << datastring << endl;
-		cout<<"Nama Produk : ";
-		getline(cin, datastring);
-		fout << datastring << endl;
+struct dataPesanan{
+	string kodePesanan;
+	int tglPesan;
+	string pemesan;
+	string namaProduk;
+	string status;
+	void writeToFile(){
+		ofstream outfile;
+		outfile.open("dbPesanan.txt", ios::app);
+		outfile << kodePesanan << " " << tglPesan << " " << pemesan << " " << namaProduk << " " << status << endl;
+		outfile.close();
 	}
-		
-	fout.close();
+};
+
+void tambahPsn(){	
+	dataPesanan pesanan;
+	
+	cout<<"Kode Pesanan : "; 
+	cin.ignore(); getline(cin, pesanan.kodePesanan);
+	cout<<"Tanggal Pesan (YYYYMMDD) : ";
+	cin >> pesanan.tglPesan;
+	cout<<"Nama Pemesan : ";
+	cin.ignore(); getline(cin, pesanan.pemesan);
+	cout<<"Nama Produk : ";
+	getline(cin, pesanan.namaProduk);
+	cout<<"Status Pesanan : ";
+	getline(cin, pesanan.status);
+	
+	pesanan.writeToFile();
 }
 void tampilPsn(){
-	dataPesanan pesanan;
 	ifstream fin;
-	
 	fin.open("dbPesanan.txt");
-	if (!fin.fail()){
-		getline(fin, pesanan.kodePesanan);
-		cout<<pesanan.tglPesan;
-		getline(fin, pesanan.pemesan);
-		getline(fin, pesanan.namaProduk);
-	}
 	
 	fin.close();
 }
