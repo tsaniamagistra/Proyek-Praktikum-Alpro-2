@@ -202,7 +202,7 @@ struct dataPesanan{
 	string status;
 	void writeToFile(){
 		ofstream outfile;
-		outfile.open("dbPesananMine.txt", ios::app);
+		outfile.open("dbPesanan.txt", ios::app);
 		outfile << kodePesanan << endl << tglPesan << endl << pemesan << endl << namaProduk << endl << status << endl << endl;
 		outfile.close();
 	}
@@ -230,7 +230,7 @@ void tampilPsn(){
 	string data;
 	dataPesanan pesanan[100];
 	
-	fin.open("dbPesananMine.txt");
+	fin.open("dbPesanan.txt");
 
 	if(!fin.fail()){
 		while(getline(fin, data, ',')){
