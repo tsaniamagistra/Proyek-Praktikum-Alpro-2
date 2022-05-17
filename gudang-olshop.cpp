@@ -23,6 +23,7 @@ dataProduk produk[100];
 int hitung = 0;
 
 int main(){
+	char kembali = 'y';
     while (true)
     {
         int select = menu();
@@ -36,10 +37,15 @@ int main(){
 			}
 		}
         else if (select == 2){
-			while (true){
+			while (kembali == 'y'){
 				int q = menuPesanan();
 				if (q == 1) tambahPsn();
-				else if (q == 2) tampilPsn();
+				else if (q == 2){
+					kembali = 'n';
+					tampilPsn();
+					cout<<"input char apapun untuk kembali";
+					cin>>kembali;
+				}
 				else if (q == 3) ubahPsn();
 				else if (q == 4) break;
 			}
@@ -196,8 +202,8 @@ struct dataPesanan{
 	string status;
 	void writeToFile(){
 		ofstream outfile;
-		outfile.open("dbPesanan.txt", ios::app);
-		outfile << kodePesanan << " " << tglPesan << " " << pemesan << " " << namaProduk << " " << status << endl;
+		outfile.open("dbPesananMine.txt", ios::app);
+		outfile << kodePesanan << endl << tglPesan << endl << pemesan << endl << namaProduk << endl << status << endl << endl;
 		outfile.close();
 	}
 };
@@ -218,9 +224,19 @@ void tambahPsn(){
 	
 	pesanan.writeToFile();
 }
+
 void tampilPsn(){
 	ifstream fin;
-	fin.open("dbPesanan.txt");
+	string data;
+	dataPesanan pesanan[100];
+	
+	fin.open("dbPesananMine.txt");
+
+	if(!fin.fail()){
+		while(getline(fin, data, ',')){
+			cout << data << endl;
+		}
+	}
 	
 	fin.close();
 }
