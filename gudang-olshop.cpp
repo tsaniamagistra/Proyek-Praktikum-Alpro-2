@@ -6,7 +6,9 @@
 
 using namespace std;
 
-int menuPrd(); void tambahPrd(); void tampilPrd(); void ubahPrd(); void hapusPrd();
+int menu(); int menuProduk(),menuPesanan();
+void tambahPrd(),tampilPrd(),ubahPrd(),hapusPrd();
+void tambahPsn(),tampilPsn(),ubahPsn();
 
 struct dataProduk
 {
@@ -17,36 +19,59 @@ struct dataProduk
 };
 dataProduk produk[100];
 
-struct dataPesanan
-{
-	string kodePesan;
-	int tglPesan;
-	string pemesan;
-	string namaBarang;
-	enum status { dikemas, terkemas, dikirim, diterima } check;
-	int tglKirim;
-	int tglTerima;
-};
-dataPesanan pesanan[1];
-
 int hitung = 0;
 
 int main(){
+	char kembali = 'k';
     while (true)
     {
-        int select = menuPrd();
-		if (select == 1)
-            tambahPrd();
-        else if (select == 2)
-            tampilPrd();
-        else if (select == 3)
-            ubahPrd();
-		else if (select == 4)
-			break;
+        int select = menu();
+        if (select == 1){
+            while (true){
+				int q = menuProduk();
+				if (q == 1) tambahPrd();
+				else if (q == 2) tampilPrd();
+				else if (q == 3) ubahPrd();
+				else if (q == 4) break;
+			}
+		}
+        else if (select == 2){
+			while (kembali != '0'){
+				int q = menuPesanan();
+				if (q == 1) tambahPsn();
+				else if (q == 2){
+					kembali = '0';
+					tampilPsn();
+					cout<<"input k untuk kembali : ";
+					cin>>kembali;
+				}
+				else if (q == 3) ubahPsn();
+				else if (q == 4) break;
+			}
+		}
+        else if (select == 3) break;
 	}
+	return 0;
 }
-int menuPrd()
 
+int menu()
+{
+	system("cls");
+    int sel;
+	cout << "[==============================================================]\n";
+	cout << "|                      Gudang Online Shop                      |\n";
+	cout << "[==============================================================]\n\n";
+	cout << " Menu Utama\n\n";
+	cout << " [1] Data Produk\n";
+	cout << " [2] Data Pesanan\n";
+	cout << " [3] Keluar\n\n";
+	cout << " Pilih	: ";
+
+	cin>>sel;
+	return sel;
+}
+
+int menuProduk()
 {
 	system("cls");
     int sel;
@@ -146,6 +171,8 @@ void ubahPrd()
 	}
 }
 
+void hapusPrd(){}
+
 int menuPesanan()
 {
 	system("cls");
@@ -165,7 +192,74 @@ int menuPesanan()
 	cin>>sel;
 	return sel;
 }
-void hapusPrd(){};
-void tambahPsn();
-void tampilPsn(){};
-void ubahPsn(){};
+
+struct dataPesanan{
+	string kodePesanan;
+	int tglPesan;
+	string pemesan;
+	string namaProduk;
+	string status;
+	void writeToFile(){
+		ofstream outfile;
+		outfile.open("dbPesanan.txt", ios::app);
+		outfile << kodePesanan << endl << tglPesan << endl << pemesan << endl << namaProduk << endl << status << endl;
+		outfile.close();
+	}
+};
+
+void tambahPsn(){	
+	dataPesanan pesanan;
+	
+	system("cls");
+	cout<<"Kode Pesanan : "; 
+	cin.ignore(); getline(cin, pesanan.kodePesanan);
+	cout<<"Tanggal Pesan (YYYYMMDD) : ";
+	cin >> pesanan.tglPesan;
+	cout<<"Nama Pemesan : ";
+	cin.ignore(); getline(cin, pesanan.pemesan);
+	cout<<"Nama Produk : ";
+	getline(cin, pesanan.namaProduk);
+	cout<<"Status Pesanan : ";
+	getline(cin, pesanan.status);
+	
+	pesanan.writeToFile();
+}
+
+void tampilPsn(){
+	ifstream fin;
+	string data;
+	dataPesanan pesanan[100];
+	int i=0;
+	
+	fin.open("dbPesanan.txt");
+
+	if(!fin.fail()){
+		while(!fin.eof()){
+			cout<<"bisa.";
+			fin >> pesanan[i].kodePesanan
+				>> pesanan[i].tglPesan
+				>> pesanan[i].pemesan
+				>> pesanan[i].namaProduk
+				>> pesanan[i].status;
+			if(!fin.eof()) i++;
+		}
+	}
+	
+	system("cls");
+	cout<<setiosflags(ios::left)<<setfill(' ')<<setw(14)<<"Kode Pesanan"
+		<<setiosflags(ios::left)<<setfill(' ')<<setw(15)<<"Tanggal Pesan"
+		<<setiosflags(ios::left)<<setfill(' ')<<setw(20)<<"Pemesan"
+		<<setiosflags(ios::left)<<setfill(' ')<<setw(20)<<"Produk"
+		<<setiosflags(ios::left)<<setfill(' ')<<setw(20)<<"Status"<<endl;
+	for(int k=0;k<i;k++){
+		cout<<setiosflags(ios::left)<<setfill(' ')<<setw(14)<<pesanan[k].kodePesanan
+			<<setiosflags(ios::left)<<setfill(' ')<<setw(15)<<pesanan[k].tglPesan
+			<<setiosflags(ios::left)<<setfill(' ')<<setw(20)<<pesanan[k].pemesan
+			<<setiosflags(ios::left)<<setfill(' ')<<setw(20)<<pesanan[k].namaProduk
+			<<setiosflags(ios::left)<<setfill(' ')<<setw(20)<<pesanan[k].status<<endl;
+	}
+	cout<<endl;
+	
+	fin.close();
+}
+void ubahPsn(){}
