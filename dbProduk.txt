@@ -8,8 +8,11 @@ sepatu
 mmm
 3
 40000
-0
-0
-
-
-0
+8mobil
+toyota
+1
+70
+7asd
+dsa
+3
+90000

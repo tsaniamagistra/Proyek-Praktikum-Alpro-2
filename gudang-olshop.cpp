@@ -7,7 +7,7 @@
 using namespace std;
 
 int menu(); int menuProduk(),menuPesanan();
-void tambahPrd(),tampilPrd(),ubahPrd(),hapusPrd();
+void tambahPrd(),tampilPrd(),ubahPrd(),hapusPrd(),urutPrd(),swap(int *a, int *b);
 void tambahPsn(),tampilPsn(),ubahPsn();
 void header();
 struct dataProduk
@@ -145,8 +145,16 @@ void tampilPrd()
 	}
 	cout << "+==============================================================+\n";
 	tampil.close();
-
-    system("pause");
+	cout << "Urutkan berdasarkan : ";
+	int pilih;
+	cin >> pilih;
+	if (pilih == 1) {
+		urutPrd();
+	}
+	if (pilih != 1){
+		cout << "Tidak ada data yang dapat diurutkan";
+	}
+	system("pause");
 }
 
 void ubahPrd(){
@@ -233,6 +241,42 @@ void hapusPrd(){
 	}
 	data.close();
 	system("pause");
+}
+
+//urut menurut harga tertinggi
+void urutPrd(){
+	int k,j,min_idx,n;
+	system("cls");
+	header();
+	fstream data;
+	data.open("dbProduk.txt", ios::in);
+	data.seekg(0, ios::beg);
+	int i = 0;
+	while(!data.eof()){
+		data >> produk[i].no
+			>> produk[i].nama
+			>> produk[i].merk
+			>> produk[i].stok
+			>> produk[i].harga;
+		i++;
+	}
+	data.close();
+	n = 100;
+	for (k = 0; k < n-1; k++){
+		min_idx = k;
+        for (j = k+1; j < n; j++)
+			if (produk[j].harga < produk[min_idx].harga)
+				min_idx = j;
+        swap(&produk[min_idx].harga, &produk[i].harga);
+    }
+	tampilPrd();
+	system("pause");
+}
+
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
 }
 
 int menuPesanan()
