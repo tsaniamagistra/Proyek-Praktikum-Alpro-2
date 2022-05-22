@@ -112,7 +112,6 @@ void tampilPrd()
 
 	if(!tampil.fail()){
 		while(!tampil.eof()){
-			cout<<"bisa.";
 			tampil >> produk[i].no
 				>> produk[i].nama
 				>> produk[i].merk
@@ -160,7 +159,7 @@ void ubahPrd(){
 			>> produk[i].merk
 			>> produk[i].stok
 			>> produk[i].harga;
-		i++;
+		if(!data.eof()) i++;
 	}
 	data.close();
 	cout << " Ubah Produk\n\n";
@@ -204,7 +203,7 @@ void hapusPrd(){
 			>> produk[i].merk
 			>> produk[i].stok
 			>> produk[i].harga;
-		i++;
+		if(!data.eof()) i++;
 	}
 	data.close();
 	cout << " Hapus Produk\n\n";
@@ -213,11 +212,13 @@ void hapusPrd(){
 	cin >> no;
 	for(int k=0;k<i;k++){
 		if(produk[k].no == no){
-			produk[k].no = produk[i-1].no;
-			produk[k].nama = produk[i-1].nama;
-			produk[k].merk = produk[i-1].merk;
-			produk[k].stok = produk[i-1].stok;
-			produk[k].harga = produk[i-1].harga;
+			for(int a=k;a<i;a++){
+				produk[a].no = produk[a+1].no;
+				produk[a].nama = produk[a+1].nama;
+				produk[a].merk = produk[a+1].merk;
+				produk[a].stok = produk[a+1].stok;
+				produk[a].harga = produk[a+1].harga;
+			}
 		}
 	}
 	data.open("dbProduk.txt", ios::out);
@@ -294,7 +295,6 @@ void tampilPsn(){
 
 	if(!fin.fail()){
 		while(!fin.eof()){
-			cout<<"bisa.";
 			fin >> pesanan[i].kodePesanan
 				>> pesanan[i].tglPesan
 				>> pesanan[i].pemesan
@@ -365,12 +365,12 @@ void ubahPsn(){
 		}
 	}
 	data.open("dbPesanan.txt", ios::out);
-	for(int j=0;j<i;j++){
-		data << pesanan[j].kodePesanan << endl
-			<< pesanan[j].tglPesan << endl
-			<< pesanan[j].pemesan << endl
-			<< pesanan[j].noProduk << endl
-			<< pesanan[j].status << endl;
+	for(int k=0;k<i;k++){
+		data << pesanan[k].kodePesanan << endl
+			<< pesanan[k].tglPesan << endl
+			<< pesanan[k].pemesan << endl
+			<< pesanan[k].noProduk << endl
+			<< pesanan[k].status << endl;
 	}
 	data.close();
 	cout << " Data Pesanan Berhasil Diubah\n";
@@ -394,7 +394,7 @@ void hapusPsn(){
 	}
 	data.close();
 	
-	cout << " Hapus Produk\n\n";
+	cout << " Hapus Pesanan\n\n";
 	cout << " Masukkan kode pesanan yang akan dihapus: ";
 	string kode;
 	cin >> kode;
