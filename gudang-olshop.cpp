@@ -7,7 +7,7 @@
 using namespace std;
 
 int menu(); int menuProduk(),menuPesanan();
-void tambahPrd(),tampilPrd(),ubahPrd(),hapusPrd(),urutPrd(),swap(int *a, int *b);
+void tambahPrd(),tampilPrd(),ubahPrd(),hapusPrd(),urutPrd(),cariPrd(),swap(int *a, int *b);
 void tambahPsn(),tampilPsn(),ubahPsn(),hapusPsn();
 void header();
 struct dataProduk
@@ -140,14 +140,19 @@ void tampilPrd()
 	}
 	cout << "+==============================================================+\n";
 	tampil.close();
-	cout << "Urutkan berdasarkan : ";
+	cout << " 1. Urutkan produk berdasarkan harga\n";
+	cout << " 2. cari data produk\n";
+	cout << " 3. kembali\n";
 	int pilih;
 	cin >> pilih;
 	if (pilih == 1) {
 		urutPrd();
 	}
-	if (pilih != 1){
-		cout << "Tidak ada data yang dapat diurutkan";
+	else if(pilih == 2){
+		cariPrd();
+	}
+	else if(pilih == 3){
+		return;
 	}
 	system("pause");
 }
@@ -274,6 +279,38 @@ void swap(int *a, int *b) {
     int temp = *a;
     *a = *b;
     *b = temp;
+}
+
+void cariPrd(){
+	system("cls");
+	header();
+	fstream data;
+	data.open("dbProduk.txt", ios::in);
+	data.seekg(0, ios::beg);
+	int i = 0;
+	while(!data.eof()){
+		data >> produk[i].no
+			>> produk[i].nama
+			>> produk[i].merk
+			>> produk[i].stok
+			>> produk[i].harga;
+		if(!data.eof()) i++;
+	}
+	data.close();
+	cout << " Cari Produk\n\n";
+	cout << " Masukkan Nama Produk yang akan dicari: ";
+	string nama;
+	cin.ignore(); getline(cin, nama);
+	for(int k=0;k<i;k++){
+		if(produk[k].nama == nama){
+			cout << " No Produk: " << produk[k].no << endl;
+			cout << " Nama Produk: " << produk[k].nama << endl;
+			cout << " Merk Produk: " << produk[k].merk << endl;
+			cout << " Stok Produk: " << produk[k].stok << endl;
+			cout << " Harga Produk: " << produk[k].harga << endl;
+		}
+	}
+	system("pause");
 }
 
 int menuPesanan()
