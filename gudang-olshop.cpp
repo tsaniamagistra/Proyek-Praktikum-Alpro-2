@@ -8,8 +8,9 @@ using namespace std;
 
 int menu(); int menuProduk(),menuPesanan();
 void tambahPrd(),tampilPrd(),ubahPrd(),hapusPrd(),urutPrd(),cariPrd(),swap(int *a, int *b);
-void tambahPsn(),tampilPsn(),ubahPsn(),hapusPsn();
+void tambahPsn(),tampilPsn(),ubahPsn(),hapusPsn(),urutPsn(),cariPsn();
 void header();
+
 struct dataProduk
 {
 	int no;
@@ -25,8 +26,23 @@ struct dataProduk
 	}
 };
 dataProduk produk[100];
+void coutPrd(int i, dataProduk produk[100]);
 
-int hitung = 0;
+struct dataPesanan{
+	string kodePesanan;
+	int tglPesan;
+	string pemesan;
+	int noProduk;
+	string status;
+	void writeToFile(){
+		ofstream outfile;
+		outfile.open("dbPesanan.txt", ios::app);
+		outfile << kodePesanan << endl << tglPesan << endl << pemesan << endl << noProduk << endl << status << endl;
+		outfile.close();
+	}
+};
+dataPesanan pesanan[100];
+void coutPsn(int i, dataPesanan pesanan[100]);
 
 int main(){
     while (true)
@@ -121,24 +137,7 @@ void tampilPrd()
 	}
     system("cls");
 	header();
-    cout << "+==============================================================+\n";
-	cout << setw(4) << "| No";
-	cout << setw(15) << "Nama Produk";
-	cout << setw(15) << "Merk Produk";
-	cout << setw(15) << "Stok Produk";
-	cout << setw(11) << "Harga" <<"   | ";
-	cout << endl;
-    cout << "+==============================================================+\n";
-
-	for(int k=0;k<i;k++){
-		cout << "| " 
-			<< setiosflags(ios::left) << setfill(' ') << setw(7) << produk[k].no
-			<< setiosflags(ios::left) << setfill(' ') << setw(15) << produk[k].nama
-			<< setiosflags(ios::left) << setfill(' ') << setw(18) << produk[k].merk
-			<< setiosflags(ios::left) << setfill(' ') << setw(12) << produk[k].stok
-			<< setiosflags(ios::left) << setfill(' ') << setw(9) << produk[k].harga << "|\n";
-	}
-	cout << "+==============================================================+\n";
+	coutPrd(i, produk);
 	tampil.close();
 	cout << " 1. Urutkan produk berdasarkan harga\n";
 	cout << " 2. cari data produk\n";
@@ -245,7 +244,6 @@ void hapusPrd(){
 	system("pause");
 }
 
-//urut menurut harga tertinggi
 void urutPrd(){
 	int k,j,min_idx,n;
 	system("cls");
@@ -260,7 +258,7 @@ void urutPrd(){
 			>> produk[i].merk
 			>> produk[i].stok
 			>> produk[i].harga;
-		i++;
+		if(!data.eof()) i++;
 	}
 	data.close();
 	n = 100;
@@ -271,7 +269,7 @@ void urutPrd(){
 				min_idx = j;
         swap(&produk[min_idx].harga, &produk[i].harga);
     }
-	tampilPrd();
+    coutPrd(i, produk);
 	system("pause");
 }
 
@@ -317,10 +315,7 @@ int menuPesanan()
 {
 	system("cls");
 	int sel;
-    cout << "[==============================================================]\n";
-    cout << "|                      Gudang Online Shop                      |\n";
-    cout << "|                           Pesanan                            |\n";
-    cout << "[==============================================================]\n\n";
+	header();
 	
 	cout << " Menu Utama\n\n";
 	cout << " [1] Tambahkan Pesanan\n";
@@ -333,21 +328,6 @@ int menuPesanan()
 	cin>>sel;
 	return sel;
 }
-
-struct dataPesanan{
-	string kodePesanan;
-	int tglPesan;
-	string pemesan;
-	int noProduk;
-	string status;
-	void writeToFile(){
-		ofstream outfile;
-		outfile.open("dbPesanan.txt", ios::app);
-		outfile << kodePesanan << endl << tglPesan << endl << pemesan << endl << noProduk << endl << status << endl;
-		outfile.close();
-	}
-};
-dataPesanan pesanan[100];
 
 void tambahPsn(){	
 	dataPesanan pesanan;
@@ -384,22 +364,17 @@ void tampilPsn(){
 		}
 	}
 	system("cls");
-	cout<<setiosflags(ios::left)<<setfill(' ')<<setw(14)<<"Kode Pesanan"
-		<<setiosflags(ios::left)<<setfill(' ')<<setw(15)<<"Tanggal Pesan"
-		<<setiosflags(ios::left)<<setfill(' ')<<setw(20)<<"Pemesan"
-		<<setiosflags(ios::left)<<setfill(' ')<<setw(20)<<"Produk"
-		<<setiosflags(ios::left)<<setfill(' ')<<setw(20)<<"Status"<<endl;
-	for(int k=0;k<i;k++){
-		cout<<setiosflags(ios::left)<<setfill(' ')<<setw(14)<<pesanan[k].kodePesanan
-			<<setiosflags(ios::left)<<setfill(' ')<<setw(15)<<pesanan[k].tglPesan
-			<<setiosflags(ios::left)<<setfill(' ')<<setw(20)<<pesanan[k].pemesan
-			<<setiosflags(ios::left)<<setfill(' ')<<setw(20)<<pesanan[k].noProduk
-			<<setiosflags(ios::left)<<setfill(' ')<<setw(20)<<pesanan[k].status<<endl;
-	}
-	cout<<endl;
-	
+	header();
+	coutPsn(i,pesanan);
 	fin.close();
-	
+	cout << " 1. Urutkan pesanan berdasarkan tanggal\n";
+	cout << " 2. Cari data pesanan\n";
+	cout << " 3. Kembali\n";
+	int pilih;
+	cin >> pilih;
+	if (pilih == 1) urutPsn();
+	else if (pilih == 2) cariPsn();
+	else if (pilih == 3) return;
 	system("pause");
 }
 
@@ -496,9 +471,82 @@ void hapusPsn(){
 	system("pause");
 }
 
+void cariPsn(){
+	system("cls");
+	header();
+	fstream data;
+	data.open("dbPesanan.txt", ios::in);
+	data.seekg(0, ios::beg);
+	int i=0;
+	while(!data.eof()){
+		data >> pesanan[i].kodePesanan
+			>> pesanan[i].tglPesan
+			>> pesanan[i].pemesan
+			>> pesanan[i].noProduk
+			>> pesanan[i].status;
+		if(!data.eof()) i++;
+	}
+	data.close();
+	cout << " Cari Pesanan\n\n";
+	cout << " Masukkan Kode Pesanan yang akan dicari: ";
+	string kode;
+	cin.ignore(); getline(cin, kode);
+	for(int k=0;k<i;k++){
+		if(pesanan[k].kodePesanan == kode){
+			cout << " Kode Pesanan: " << pesanan[k].kodePesanan << endl;
+			cout << " Tanggal Pesan: " << pesanan[k].tglPesan << endl;
+			cout << " Pemesan: " << pesanan[k].pemesan<< endl;
+			cout << " Produk: " << pesanan[k].noProduk << endl;
+			cout << " Status Pesanan: " << pesanan[k].status << endl;
+		}
+	}
+	system("pause");
+}
+
+void urutPsn(){}
+
 void header(){
 	cout << "+==============================================================+\n";
 	cout << "|                      Gudang Online Shop                      |\n";
 	cout << "|                                                              |\n";
 	cout << "+==============================================================+\n\n";
+}
+
+void coutPrd(int i, dataProduk produk[100]){
+	cout << "+==============================================================+\n";
+	cout << setw(5) << "| No";
+	cout << setw(15) << "Nama Produk";
+	cout << setw(15) << "Merk Produk";
+	cout << setw(15) << "Stok Produk";
+	cout << setw(11) << "Harga" <<"   | ";
+	cout << endl;
+    cout << "+==============================================================+\n";
+
+	for(int k=0;k<i;k++){
+		cout << "| " 
+			<< setiosflags(ios::left) << setfill(' ') << setw(7) << produk[k].no
+			<< setiosflags(ios::left) << setfill(' ') << setw(15) << produk[k].nama
+			<< setiosflags(ios::left) << setfill(' ') << setw(18) << produk[k].merk
+			<< setiosflags(ios::left) << setfill(' ') << setw(12) << produk[k].stok
+			<< setiosflags(ios::left) << setfill(' ') << setw(9) << produk[k].harga << "|\n";
+	}
+	cout << "+==============================================================+\n";
+}
+
+void coutPsn(int i, dataPesanan pesanan[100]){
+	cout << "+===============================================================================+\n";
+	cout<<setiosflags(ios::left)<<setfill(' ')<<setw(14)<<"Kode Pesanan"
+		<<setiosflags(ios::left)<<setfill(' ')<<setw(15)<<"Tanggal Pesan"
+		<<setiosflags(ios::left)<<setfill(' ')<<setw(20)<<"Pemesan"
+		<<setiosflags(ios::left)<<setfill(' ')<<setw(20)<<"Produk"
+		<<setiosflags(ios::left)<<setfill(' ')<<setw(20)<<"Status"<<endl;
+	cout << "+===============================================================================+\n";
+	for(int k=0;k<i;k++){
+		cout<<setiosflags(ios::left)<<setfill(' ')<<setw(14)<<pesanan[k].kodePesanan
+			<<setiosflags(ios::left)<<setfill(' ')<<setw(15)<<pesanan[k].tglPesan
+			<<setiosflags(ios::left)<<setfill(' ')<<setw(20)<<pesanan[k].pemesan
+			<<setiosflags(ios::left)<<setfill(' ')<<setw(20)<<pesanan[k].noProduk
+			<<setiosflags(ios::left)<<setfill(' ')<<setw(20)<<pesanan[k].status<<endl;
+	}
+	cout << "+===============================================================================+\n";
 }
