@@ -7,8 +7,9 @@
 using namespace std;
 
 int menu(); int menuProduk(),menuPesanan();
-void tambahPrd(),tampilPrd(),ubahPrd(),hapusPrd(),urutPrd(),cariPrd(),swap(int *a, int *b);
-void tambahPsn(),tampilPsn(),ubahPsn(),hapusPsn();
+void tambahPrd(),tampilPrd(),ubahPrd(),hapusPrd(),urutPrd(),cariPrd();
+void tambahPsn(),tampilPsn(),ubahPsn(),hapusPsn(),urutPsn(),cariPsn();
+void swap(int *a, int *b);
 void header();
 struct dataProduk
 {
@@ -301,6 +302,8 @@ void cariPrd(){
 	cout << " Masukkan Nama Produk yang akan dicari: ";
 	string nama;
 	cin.ignore(); getline(cin, nama);
+	cout << endl;
+	cout << "Data Ditemukan\n\n";
 	for(int k=0;k<i;k++){
 		if(produk[k].nama == nama){
 			cout << " No Produk: " << produk[k].no << endl;
