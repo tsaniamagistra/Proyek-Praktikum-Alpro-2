@@ -10,7 +10,7 @@ int menu(); int menuProduk(),menuPesanan();
 void tambahPrd(),tampilPrd(),ubahPrd(),hapusPrd(),urutPrd(),cariPrd();
 void tambahPsn(),tampilPsn(),ubahPsn(),hapusPsn(),urutPsn(),cariPsn();
 void bsearch(int i, string nama);
-void swap(int *a, int *b);
+void tukar(int *, int *);
 void header();
 
 struct dataProduk //struktur data produk
@@ -259,6 +259,7 @@ void urutPrd(){ //fungsi mengurutkan produk
 	data.open("dbProduk.txt", ios::in);
 	data.seekg(0, ios::beg);
 	int i = 0;
+	int pos;
 	while(!data.eof()){ 
 		data >> produk[i].no
 			>> produk[i].nama
@@ -310,8 +311,8 @@ void urutPrd(){ //fungsi mengurutkan produk
 		}
 	}
 	else if(urut == 4){ //urutkan berdasarkan stok
-		for(int k=0;k<i-1;k++){ 
-			for(int a=k+1;a<i;a++){ 
+		for(int k=0;k<i-1;k++){
+			for(int a=k+1;a<i;a++){
 				if(produk[k].stok < produk[a].stok){ //berdasarkan stok paling banyak
 					dataProduk temp = produk[k];
 					produk[k] = produk[a];
@@ -344,6 +345,12 @@ void urutPrd(){ //fungsi mengurutkan produk
 	else {
 		cout << " Pilihan tidak ada\n";
 	}
+}
+
+void tukar( int *a, int *b){ //fungsi untuk menukar nilai
+	int temp = *a;
+	*a = *b;
+	*b = temp;
 }
 
 void cariPrd(){ //fungsi mencari produk
@@ -762,12 +769,6 @@ void urutPsn(){
 	coutPsn(i, pesanan);
 	cout << "Data pesanan telah diurutkan\n";
 	system("pause");
-}
-
-void swap(int *a, int *b) { //fungsi untuk swap
-    int temp = *a;
-    *a = *b;
-    *b = temp;
 }
 
 
