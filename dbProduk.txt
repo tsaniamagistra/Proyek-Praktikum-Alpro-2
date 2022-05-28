@@ -18,7 +18,13 @@ buku
 sidu
 10
 5000
-5lampu
+5
+lampu
 philips
 10
 50000
+7
+tas
+eiger
+5
+800000
