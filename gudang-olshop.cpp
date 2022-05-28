@@ -9,6 +9,7 @@ using namespace std;
 int menu(); int menuProduk(),menuPesanan();
 void tambahPrd(),tampilPrd(),ubahPrd(),hapusPrd(),urutPrd(),cariPrd();
 void tambahPsn(),tampilPsn(),ubahPsn(),hapusPsn(),urutPsn(),cariPsn();
+void bsearch(int i, string nama);
 void swap(int *a, int *b);
 void header();
 
@@ -365,22 +366,29 @@ void cariPrd(){ //fungsi mencari produk
 	string nama;
 	cin >> nama;
 	system("cls");
-	if (i == 0){
-		cout << " Data tidak ditemukan\n";
-	}
-	else{
-		for(int k=0;k<i;k++){ //looping untuk mencari produk
-		if(produk[k].nama == nama){ //jika produk ditemukan
-			cout << " Data produk yang dicari :\n";
-			cout << " No		: " << produk[k].no << endl;
-			cout << " Nama		: " << produk[k].nama << endl;
-			cout << " Merk		: " << produk[k].merk << endl;
-			cout << " Stok		: " << produk[k].stok << endl;
-			cout << " Harga		: " << produk[k].harga << endl;
-			}
-		}
-	}
+	header();
+	bsearch (i,nama); //mencari produk berdasarkan nama
 	system("pause");
+}
+
+void bsearch(int i, string nama){ //fungsi mencari produk
+	int y=1;
+	if (produk[i].nama == nama){
+		cout << " Data Produk dengan nama " << nama << " :\n";
+		cout << " No.		: " << produk[i].no << endl
+			<< " Nama		: " << produk[i].nama << endl
+			<< " Merk		: " << produk[i].merk << endl
+			<< " Stok		: " << produk[i].stok << endl
+			<< " Harga		: " << produk[i].harga << endl;
+	}
+	else if (i>6 && y != 1) {
+        cout << "Data Tidak Ditemukan" << endl;
+    }
+    else
+    {
+        i++;
+        bsearch(i,nama);
+	}
 }
 
 int menuPesanan() //fungsi menu pesanan
