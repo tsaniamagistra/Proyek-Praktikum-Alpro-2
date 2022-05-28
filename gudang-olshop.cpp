@@ -9,8 +9,7 @@ using namespace std;
 int menu(); int menuProduk(),menuPesanan();
 void tambahPrd(),tampilPrd(),ubahPrd(),hapusPrd(),urutPrd(),cariPrd();
 void tambahPsn(),tampilPsn(),ubahPsn(),hapusPsn(),urutPsn(),cariPsn();
-void bsearch(int i, string nama);
-void tukar(int *, int *);
+void search(int i, string nama), tukar(int *, int *);
 void header();
 
 struct dataProduk //struktur data produk
@@ -29,6 +28,7 @@ struct dataProduk //struktur data produk
 };
 dataProduk produk[100]; //array struktur data produk
 void coutPrd(int i, dataProduk produk[100]); //cetak struktur data produk
+void bsearch(int i, int k, string nama, dataProduk produk[100]);
 
 struct dataPesanan //struktur data pesanan
 {	
@@ -281,9 +281,9 @@ void urutPrd(){ //fungsi mengurutkan produk
 		for(int k=0;k<i-1;k++){ 
 			for(int a=k+1;a<i;a++){ 
 				if(produk[k].harga > produk[a].harga){ //berdasarkan harga paling murah
-					dataProduk temp = produk[k];
-					produk[k] = produk[a];
-					produk[a] = temp;
+					int a = produk[k].harga;
+					int b = produk[k].harga;
+					tukar(&a, &b);
 				}
 			}
 		}
@@ -292,9 +292,9 @@ void urutPrd(){ //fungsi mengurutkan produk
 		for(int k=0;k<i-1;k++){
 			for(int a=k+1;a<i;a++){
 				if(produk[k].harga < produk[a].harga){ //berdasarkan harga paling mahal
-					dataProduk temp = produk[k];
-					produk[k] = produk[a];
-					produk[a] = temp;
+					int a = produk[k].harga;
+					int b = produk[a].harga;
+					tukar(&a, &b);
 				}
 			}
 		}
@@ -303,9 +303,9 @@ void urutPrd(){ //fungsi mengurutkan produk
 		for(int k=0;k<i-1;k++){
 			for(int a=k+1;a<i;a++){
 				if(produk[k].stok > produk[a].stok){ //berdasarkan stok paling sedikit
-					dataProduk temp = produk[k];
-					produk[k] = produk[a];
-					produk[a] = temp;
+					int a = produk[k].stok;
+					int b = produk[a].stok;
+					tukar(&a, &b);
 				}
 			}
 		}
@@ -314,9 +314,9 @@ void urutPrd(){ //fungsi mengurutkan produk
 		for(int k=0;k<i-1;k++){
 			for(int a=k+1;a<i;a++){
 				if(produk[k].stok < produk[a].stok){ //berdasarkan stok paling banyak
-					dataProduk temp = produk[k];
-					produk[k] = produk[a];
-					produk[a] = temp;
+					int a = produk[k].stok;
+					int b = produk[a].stok;
+					tukar(&a, &b);
 				}
 			}
 		}
@@ -374,27 +374,27 @@ void cariPrd(){ //fungsi mencari produk
 	cin >> nama;
 	system("cls");
 	header();
-	bsearch (i,nama); //mencari produk berdasarkan nama
+	int k=0;
+	bsearch (i,k,nama, produk); //mencari produk berdasarkan nama
 	system("pause");
 }
 
-void bsearch(int i, string nama){ //fungsi mencari produk
-	int y=1;
-	if (produk[i].nama == nama){
+void bsearch(int i, int k, string nama, dataProduk produk[100]){ //fungsi mencari produk
+	if (produk[k].nama == nama){
 		cout << " Data Produk dengan nama " << nama << " :\n";
-		cout << " No.		: " << produk[i].no << endl
-			<< " Nama		: " << produk[i].nama << endl
-			<< " Merk		: " << produk[i].merk << endl
-			<< " Stok		: " << produk[i].stok << endl
-			<< " Harga		: " << produk[i].harga << endl;
+		cout << " No.		: " << produk[k].no << endl
+			<< " Nama		: " << produk[k].nama << endl
+			<< " Merk		: " << produk[k].merk << endl
+			<< " Stok		: " << produk[k].stok << endl
+			<< " Harga		: " << produk[k].harga << endl;
 	}
-	else if (i>6 && y != 1) {
+	else if (k==i) {
         cout << "Data Tidak Ditemukan" << endl;
     }
     else
     {
-        i++;
-        bsearch(i,nama);
+        k++;
+        bsearch(i,k,nama,produk);
 	}
 }
 
