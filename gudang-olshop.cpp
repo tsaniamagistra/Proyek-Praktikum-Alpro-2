@@ -9,7 +9,7 @@ using namespace std;
 int menu(); int menuProduk(),menuPesanan();
 void tambahPrd(),tampilPrd(),ubahPrd(),hapusPrd(),urutPrd(),cariPrd();
 void tambahPsn(),tampilPsn(),ubahPsn(),hapusPsn(),urutPsn(),cariPsn();
-void search(int i, string nama), tukar(int *, int *);
+void tukar(int *, int *);
 void header();
 
 struct dataProduk //struktur data produk
@@ -259,7 +259,6 @@ void urutPrd(){ //fungsi mengurutkan produk
 	data.open("dbProduk.txt", ios::in);
 	data.seekg(0, ios::beg);
 	int i = 0;
-	int pos;
 	while(!data.eof()){ 
 		data >> produk[i].no
 			>> produk[i].nama
