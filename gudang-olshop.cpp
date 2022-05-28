@@ -121,6 +121,8 @@ void tambahPrd(){ //fungsi menambah produk
 	cout << " Stok	: "; cin >> produk.stok;
 	cout << " Harga	: "; cin >> produk.harga;
 	produk.writeToFile2();
+	cout << " Data Produk Berhasil Ditambahkan\n";
+	system("pause");
 }
 
 void tampilPrd() //fungsi menampilkan produk
@@ -208,6 +210,7 @@ void ubahPrd(){ //fungsi mengubah produk
 	}
 	data.close();
 	cout << " Data Produk Berhasil Diubah\n";
+	system("pause");
 }
 
 void hapusPrd(){
@@ -250,6 +253,7 @@ void hapusPrd(){
 			<< produk[k].harga << endl;
 	}
 	data.close();
+	cout << " Data Produk Berhasil Dihapus\n";
 	system("pause");
 }
 
@@ -449,6 +453,7 @@ void tambahPsn(){ //fungsi tambah pesanan
 			<< produk[k].harga << endl;
 	}
 	dataPrd.close();
+	cout << " Data Pesanan Berhasil Ditambahkan\n";
 }
 
 void tampilPsn(){ //fungsi tampil pesanan
@@ -568,8 +573,8 @@ void ubahPsn(){ //fungsi ubah pesanan
 			<< produk[k].harga << endl;
 	}
 	dataPrd.close();
-	
 	cout << " Data Pesanan Berhasil Diubah\n";
+	system("pause");
 }
 
 void hapusPsn(){ //fungsi hapus pesanan
@@ -649,7 +654,7 @@ void hapusPsn(){ //fungsi hapus pesanan
 			<< produk[k].harga << endl;
 	}
 	dataPrd.close();
-	
+	cout << " Data Pesanan Berhasil Dihapus\n";
 	system("pause");
 }
 
